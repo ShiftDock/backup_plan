@@ -16,9 +16,21 @@ filename = "#{database['database']}_#{Time.now.strftime('%F-%H.%M')}.backup"
 dumpfile = File.expand_path("/tmp/#{filename}", __FILE__)
 
 print "Creating dumpfile (#{filename})..."
-command = "mysqldump --user #{database['username']} --password=#{database['password']} #{database['database']} > #{dumpfile}"
 
-r = system(command)
+defaults = {
+  "user" => database['username'],
+  "password" => database['password'],
+  "result-file" => dumpfile
+}
+
+options = config['options'] || {}
+options.merge!(defaults)
+
+command = options.map {|k,v| "--#{k}=#{v}"}
+command.unshift("mysqldump")
+
+IO.popen(command + [database['database']]) { |file| puts file.gets }
+
 puts "done."
 
 print "Sending backup to AWS..."
