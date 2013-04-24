@@ -8,3 +8,11 @@ amazon:
   access_key_id: BIGLONGACCESSKEY
   secret_access_key: AMAZONSECRET+ACCESSKEY
   bucket: BucketName
+  
+# You can add options to customise how you prefer your database to be dumped; for example 
+# adding compression, debug info etc. Any mysqldump option is acceptable.
+# Backup Plan sets the username and password options automatically and uses the result-file 
+# option internally. These cannot be customised.
+options:
+  debug-info: true
+  verbose: true
