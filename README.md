@@ -7,6 +7,11 @@ There are a lot of libraries, gems and scripts out there that'll back up your da
 overkill; being able to back up tons of different database types to a multitude of places. We just wanted
 something quick and easy for our most common use case, MySQL to Amazon S3. So here it is.
 
+Backup Plan requires an account with Amazon's S3 service. Sign up and create a bucket for your database backups 
+[here](http://aws.amazon.com/s3/), then generate an Access Key ID and Secret Access Key. Backup Plan parses your
+project's `database.yml` file to get the information needed to back up your chosen database to S3.
+
+
 ## Installation
 
 Requires the Amazon S3 gem to work.
