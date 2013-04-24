@@ -1,0 +1,10 @@
+# Add the absolute path to your project and the environment of the database you want to back up.
+project:
+  base_path: /Users/Me/Documents/My_Rails_Project
+  env: development
+
+# Add your Amazon security details and bucket information.
+amazon:
+  access_key_id: BIGLONGACCESSKEY
+  secret_access_key: AMAZONSECRET+ACCESSKEY
+  bucket: BucketName
