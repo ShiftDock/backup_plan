@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'aws/s3'
 require 'yaml'
-require 'fileutils'
 
 config = YAML.load_file(File.expand_path("../config.yml", __FILE__))
 project_config, amazon_config = config["project"], config["amazon"]
