@@ -43,3 +43,15 @@ It's easily fixed though, you can simply put the path to the Ruby you want to us
 You can get the path by running `which rvm` and running `ls -al path` to get a list of the Rubies available to you.
 
 Sweet.
+
+## Customisation
+
+The `config_example.yml` file is well annotated and allows you to not only set the required options; such as amazon
+credentials and your project details, but to customise the behaviour of the script. Remember to rename it to `config.yml`.
+
+Add an `options` entry if one doesn't exist and you can add any options that `mysqldump` normally takes, allowing you
+full control over what kind of dumps you want to make of your database. If you chose verbosity or debugging information
+Backup Plan will print this as it performs the dump. This will end up in your Cron logs and emails. Handy.
+
+For safety you should be careful about allowing access to this config file. Certain options used internally by the script;
+for example user, password and result-file, cannot be overridden in this way.
