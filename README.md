@@ -14,11 +14,16 @@ project's `database.yml` file to get the information needed to back up your chos
 
 ## Installation
 
-Requires the Amazon S3 gem to work.
+Requires the Amazon S3 gem:
 
     gem install aws-s3
 
-Then simply copy the directory to your server and create/edit the config.yml file with your project and Amazon S3 deets.
+Then simply clone this repo to your server:
+
+    git clone git://github.com/ShiftDock/backup_plan.git
+
+Edit the `config_example.yml` file with your project and Amazon S3 deets and any further options you want then rename it 
+to `config.yml` before running the script.
 
 ## Usage
 
@@ -49,9 +54,9 @@ Sweet.
 The `config_example.yml` file is well annotated and allows you to not only set the required options; such as amazon
 credentials and your project details, but to customise the behaviour of the script. Remember to rename it to `config.yml`.
 
-Add an `options` entry if one doesn't exist and you can add any options that `mysqldump` normally takes, allowing you
-full control over what kind of dumps you want to make of your database. If you chose verbosity or debugging information
-Backup Plan will print this as it performs the dump. This will end up in your Cron logs and emails. Handy.
+Add an `options` entry if one doesn't exist and you can add any options that `mysqldump` normally takes (see [here](http://dev.mysql.com/doc/refman/5.1/en/mysqldump.html)), 
+allowing you full control over what kind of dumps you want to make of your database. If you chose verbosity or debugging 
+information Backup Plan will print this as it performs the dump. This will end up in your Cron logs and emails. Handy.
 
 For safety you should be careful about allowing access to this config file. Certain options used internally by the script;
 for example user, password and result-file, cannot be overridden in this way.
