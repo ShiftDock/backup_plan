@@ -37,21 +37,38 @@ module BackupPlan
     end
   
     def create!
+      verbose!
       IO.popen(command + [database['database']]) { |file| puts file.gets }
       true
     end
   
     def clean!
-      puts caller[0]
+      verbose!
       return self if File.delete("#{filename_path}") == 1
     end
-  
+    
+    protected
+    
+    def verbose!
+      calling_method = caller[0][/`([^']*)'/, 1]
+      send("describe_#{calling_method}") if ["clean!", "create!"].include?(calling_method) && !!options["verbose"]
+    end
+    
+    def describe_clean!
+      puts "BackupPlan: Cleaning up dumpfile..."
+    end
+    
+    def describe_create!
+      puts "BackupPlan: Creating a dump of database data..."
+    end
+    
     private :options, :command, :defaults, :database
   end
 
-  class Amazon
-    def initialize(options = {})
+  class Transfer
+    def initialize(options = {}, verbose = false)
       @@amazon = options
+      @verbose = verbose
       establish_connection!
     end
   
@@ -63,13 +80,17 @@ module BackupPlan
     end
   
     def send!(dumpfile)
-      puts caller[0]
+      verbose!
       raise TypeError, "Dumpfile argument expected" if not dumpfile.is_a? Dumpfile
       s3_object = AWS::S3::S3Object.store("#{dumpfile.filename}", open(dumpfile.filename_path), @@amazon['bucket'])
       s3_object.response.code == "200"
     end
   
     private :establish_connection!
+    
+    def verbose!
+      puts "BackupPlan: Sending backup to Amazon S3..." unless !@verbose
+    end
   end
 
 
@@ -79,7 +100,7 @@ module BackupPlan
   
     def initialize(*args)
       @dump ||= Dumpfile.new(@@project, options)
-      @amazon ||= Amazon.new(@@amazon)
+      @amazon ||= Transfer.new(@@amazon, !!options['verbose'])
     end
 
     def options
