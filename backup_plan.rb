@@ -49,9 +49,17 @@ module BackupPlan
     
     protected
     
+    def describable(method_name)
+      ["clean!", "create!"].include?(method_name)
+    end
+    
+    def verbose?
+      !!options["verbose"]
+    end
+    
     def verbose!
       calling_method = caller[0][/`([^']*)'/, 1]
-      send("describe_#{calling_method}") if ["clean!", "create!"].include?(calling_method) && !!options["verbose"]
+      send("describe_#{calling_method}") if describable calling_method and verbose?
     end
     
     def describe_clean!
@@ -89,7 +97,7 @@ module BackupPlan
     private :establish_connection!
     
     def verbose!
-      puts "BackupPlan: Sending backup to Amazon S3..." unless !@verbose
+      puts "BackupPlan: Sending backup to Amazon S3..." unless not @verbose
     end
   end
 
