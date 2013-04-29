@@ -59,7 +59,7 @@ module BackupPlan
     
     def verbose!
       calling_method = caller[0][/`([^']*)'/, 1]
-      send("describe_#{calling_method}") if describable calling_method and verbose?
+      send "describe_#{calling_method}" if describable calling_method and verbose?
     end
     
     def describe_clean!
