@@ -36,7 +36,7 @@ and adding a line like this:
 
 This will backup your database at 3pm daily.
 
-## RVM Gotcha
+### RVM Gotcha
 
 You didn't think it'd be that simple did you? Well it is... almost. There's a slight problem if you're managing your Rubies
 with RVM in that the shell used by Cron might use the wrong ruby and thus the wrong gemset.
@@ -49,7 +49,7 @@ You can get the path by running `which rvm` and running `ls -al path` to get a l
 
 Sweet.
 
-## For Distributed Setups
+### Workaround For Distributed Setups
 
 Backup Plan was really designed for simple slice setups and experimental projects, where the database is on the same server as
 the rest of the app. There's no reason it can't be used on larger infrastructures though, when you still want a simple 
