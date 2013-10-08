@@ -49,6 +49,36 @@ You can get the path by running `which rvm` and running `ls -al path` to get a l
 
 Sweet.
 
+## For Distributed Setups
+
+Backup Plan was really designed for simple slice setups and experimental projects, where the database is on the same server as
+the rest of the app. There's no reason it can't be used on larger infrastructures though, when you still want a simple 
+backup solution with no fuss.
+
+The workaround is very simple.
+
+Simply add a `config` folder to the backup_plan folder and in it put a copy of the `database.yml` file from your Rails
+project. Only the **adapter**, **username**, **password** and **database** fields are really needed, nested under the environment name
+like so:
+
+```
+production:
+    adapter: mysql2
+    database: my_database
+    username: my_name
+    password: bigpassword!
+
+```
+
+Then point the `base_url` in your `config.yml` file at the backup_plan folder itself.
+
+```yaml
+# Add the absolute path to your project and the environment of the database you want to back up.
+project:
+  base_path: /home/me/backup_plan
+  env: production
+```
+
 ## Customisation
 
 The `config_example.yml` file is well annotated and allows you to not only set the required options; such as amazon
